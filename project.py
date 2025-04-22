@@ -10,12 +10,13 @@ Width = 800
 Height = 500
 screen = pygame.display.set_mode((Width, Height))
 pygame.display.set_caption("Space Invadors")
-background = pygame.image.load('C:\\Users\\joey2\\PycharmProjects\\pythonProject26\\background.project.jpg')
+background = pygame.image.load('background.project.jpg')
+background = pygame.transform.scale(background, (800,500))
 clock = pygame.time.Clock()
 
-sound = pygame.mixer.Sound('C:\\Users\\joey2\\PycharmProjects\\pythonProject26\\spaceinvaders1.mpeg')
+sound = pygame.mixer.Sound('spaceinvaders1.mpeg')
 sound.play()
-playerImg = pygame.image.load("C:\\Users\\joey2\\PycharmProjects\\pythonProject26\\player.project.jpg")
+playerImg = pygame.image.load("player.project.jpg")
 playerX = 370
 playerY = 380
 playerX_change = 0
@@ -28,13 +29,13 @@ enemyY_change = []
 num_of_enemies = 6
 
 for i in range(num_of_enemies):
-    enemyImg.append(pygame.image.load('C:\\Users\\joey2\\PycharmProjects\\pythonProject26\\enemy1.png'))
+    enemyImg.append(pygame.image.load('enemy1.png'))
     enemyX.append(random.randint(0, 736))
     enemyY.append(random.randint(50, 150))
     enemyX_change.append(4)
     enemyY_change.append(40)
 
-bulletImg = pygame.image.load('C:\\Users\\joey2\\PycharmProjects\\pythonProject26\\bullet.project.png')
+bulletImg = pygame.image.load('bullet.project.png')
 bulletX = 0
 bulletY = 380
 bulletX_change = 0
@@ -46,12 +47,16 @@ score_value = 0
 if os.path.exists("highscore.txt"):
     with open("highscore.txt", "r") as file:
         high_score = int(file.read())
-else:
-    high_score = 0
+high_score = 0
+
+with open("highscore.txt", "w") as file:
+    file.write(str(high_score))
 
 font = pygame.font.Font(None, 32)
 textX = 10
 textY = 10
+
+
 
 game_won = False
 game_over = False
@@ -108,7 +113,7 @@ while running:
                 if event.key == pygame.K_ESCAPE:
                     running = False
                 if event.key == pygame.K_SPACE and bullet_state == "ready":
-                    bulletSound = mixer.Sound("C:\\Users\\joey2\\PycharmProjects\\pythonProject26\\shoot.wav")
+                    bulletSound = mixer.Sound("shoot.wav")
                     bulletSound.play()
                     bulletX = playerX
                     fire_bullet(bulletX, bulletY)
@@ -146,7 +151,7 @@ while running:
 
 
             if collision(enemyX[i], enemyY[i], bulletX, bulletY):
-                explosionSound = mixer.Sound("C:\\Users\\joey2\\PycharmProjects\\pythonProject26\\invaderkilled.wav")
+                explosionSound = mixer.Sound("invaderkilled.wav")
                 explosionSound.play()
                 bulletY = 380
                 bullet_state = "ready"
@@ -183,11 +188,17 @@ while running:
     show_score(textX, textY)
     if game_won:
         you_win()
+        running = False
+
     elif game_over:
         game_over_text()
+        running = False
+
 
     pygame.display.update()
     clock.tick(60)
+pygame.time.wait(2000)
+pygame.quit()
 
 
 
