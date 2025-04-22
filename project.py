@@ -3,6 +3,7 @@ import random
 import math
 import os
 from pygame import mixer
+from pygame.time import Clock
 
 pygame.init()
 
@@ -79,6 +80,13 @@ def game_over_text():
     over_text = over_font.render("GAME OVER", True, (255, 255, 255))
     screen.blit(over_text, (200, 250))
 
+def game_instructions():
+    over_text = over_font.render("Controls: SPACEBAR TO SHOOT", True, (255, 255, 255))
+    screen.blit(over_text, (5, 10))
+    over_text = over_font.render("LEFT AND RIGHT ARROWS TO MOVE", True, (255, 255, 255))
+    screen.blit(over_text, (5, 100))
+
+
 def player(x,y):
     screen.blit(playerImg, (x,y))
 
@@ -97,10 +105,18 @@ def collision(enemyX, enemyY, bulletX, bulletY):
     else:
         return False
 
+start_time = pygame.time.get_ticks()
 running = True
+Intro = True
 while running:
+
     screen.fill((0,0,0))
     screen.blit(background, (0,0))
+    current_time = pygame.time.get_ticks()
+    if (current_time - start_time) < 6000:
+        game_instructions()
+    else:
+        screen.blit(background, (0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
