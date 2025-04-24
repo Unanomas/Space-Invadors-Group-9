@@ -17,7 +17,7 @@ clock = pygame.time.Clock()
 
 sound = pygame.mixer.Sound('spaceinvaders1.mpeg')
 sound.play()
-playerImg = pygame.image.load("player.project.jpg")
+playerImg = pygame.image.load("player.project.png").convert_alpha()
 playerX = 370
 playerY = 380
 playerX_change = 0
@@ -30,13 +30,13 @@ enemyY_change = []
 num_of_enemies = 6
 
 for i in range(num_of_enemies):
-    enemyImg.append(pygame.image.load('enemy1.png'))
+    enemyImg.append(pygame.image.load('enemy1.png').convert_alpha())
     enemyX.append(random.randint(0, 736))
     enemyY.append(random.randint(50, 150))
     enemyX_change.append(4)
     enemyY_change.append(40)
 
-bulletImg = pygame.image.load('bullet.project.png')
+bulletImg = pygame.image.load('bullet.project.png').convert_alpha()
 bulletX = 0
 bulletY = 380
 bulletX_change = 0
@@ -84,7 +84,11 @@ def game_instructions():
     over_text = over_font.render("Controls: SPACEBAR TO SHOOT", True, (255, 255, 255))
     screen.blit(over_text, (5, 10))
     over_text = over_font.render("LEFT AND RIGHT ARROWS TO MOVE", True, (255, 255, 255))
-    screen.blit(over_text, (5, 100))
+    screen.blit(over_text, (5, 60))
+    over_text = over_font.render("ESCAPE TO EXIT. DEFEAT 13", True, (255, 255, 255))
+    screen.blit(over_text, (5, 110))
+    over_text = over_font.render("ENEMIES TO WIN", True, (255, 255, 255))
+    screen.blit(over_text, (5, 160))
 
 
 def player(x,y):
