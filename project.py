@@ -48,7 +48,6 @@ score_value = 0
 if os.path.exists("highscore.txt"):
     with open("highscore.txt", "r") as file:
         high_score = int(file.read())
-high_score = 0
 
 with open("highscore.txt", "w") as file:
     file.write(str(high_score))
